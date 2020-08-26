@@ -2,6 +2,7 @@ package jpabook.jpashop;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,12 +17,19 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Order order = em.find(Order.class, 1L);
-            Long memberId = order.getMemberId();
+            //양방향 연관관계가 아니더라도 문제없다..
+            //Order order = new Order();
+            //order.addOrderItem(new OrderItem());
 
-            Member member = em.find(Member.class, memberId);
+            Order order = new Order();
+            em.persist(order);
 
-            Member findMember = order.getMember();
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+
+            em.persist(orderItem);
+
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
