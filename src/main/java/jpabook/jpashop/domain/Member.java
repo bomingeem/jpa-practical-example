@@ -14,7 +14,7 @@ public class Member {
     private String street;
     private String zipcode;
 
-    //잘못된 코드라 생각한다 ↓
+    //아래의 코드는 잘못된 코드라 생각한다 ↓
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
