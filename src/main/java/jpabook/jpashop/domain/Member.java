@@ -1,23 +1,24 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-public class Member extends BaseEntity{
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+public class Member {
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
+
     private String name;
 
-    @Embedded
-    private Address address;
+    private String city;
 
+    private String street;
 
-    //아래의 코드는 잘못된 코드라 생각한다 ↓
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
+    private String zipcode;
 
     public Long getId() {
         return id;
@@ -35,19 +36,27 @@ public class Member extends BaseEntity{
         this.name = name;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public String getStreet() {
+        return street;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 }

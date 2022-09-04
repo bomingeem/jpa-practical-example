@@ -2,41 +2,22 @@ package jpabook.jpashop.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import static javax.persistence.FetchType.*;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order extends BaseEntity {
-    @Id @GeneratedValue
+public class Order {
+    @Id
+    @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 
-    //관계형 DB를 객체에 맞춘 설계
-    //@Column(name = "MEMBER_ID")
-    //private Long memberId;
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "MEMBER_ID")
-    private Member member;
-
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "DELIVERY_ID")
-    private Delivery delivery;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    @Column(name = "MEMBER_ID")
+    private Long memberId;
 
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    public void addOrderItem(OrderItem orderItem){
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
-    }
 
     public Long getId() {
         return id;
@@ -46,12 +27,12 @@ public class Order extends BaseEntity {
         this.id = id;
     }
 
-    public Member getMember() {
-        return member;
+    public Long getMemberId() {
+        return memberId;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     public LocalDateTime getOrderDate() {
@@ -69,6 +50,4 @@ public class Order extends BaseEntity {
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
-
-
 }
